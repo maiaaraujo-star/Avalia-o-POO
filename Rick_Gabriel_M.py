@@ -2,14 +2,11 @@ from __future__ import annotations
 
 from datetime import date
 
-
 class QuantidadeInvalidaError(Exception):
  "Indica uma quantidade invalida para movimentacao do estoque"
 
-
 class MedicamentoVencidoError(Exception):
   "Indica tentativa de dispensar um lote vecido"
-
 
 class Medicamento:
 
