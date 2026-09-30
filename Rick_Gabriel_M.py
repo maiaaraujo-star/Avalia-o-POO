@@ -4,11 +4,11 @@ from datetime import date
 
 
 class QuantidadeInvalidaError(Exception):
-    "Indica uma quantidade invalida para movimentacao do estoque"
+ "Indica uma quantidade invalida para movimentacao do estoque"
 
 
 class MedicamentoVencidoError(Exception):
-    "Indica tentativa de dispensar um lote vecido"
+  "Indica tentativa de dispensar um lote vecido"
 
 
 class Medicamento:
@@ -27,27 +27,27 @@ class Medicamento:
         self.quantidade = quantidade
         self.valor = valor
 
-     @property
+@property
     def quantidade(self) -> int:
         return self._quantidade
 
-    @quantidade.setter
+ @quantidade.setter
     def quantidade(self, quantidade: int) -> None:
         if quantidade < 0:
             raise ValueError("A quantidade em estoque nao pode ser negativa")
         self._quantidade = quantidade
 
-    @property
+  @property
     def valor(self) -> float:
         return self._valor
 
-    @valor.setter
+@valor.setter
     def valor(self, valor: float) -> None:
         if not valor > 0:
             raise ValueError("O valor unitario deve ser maior que zero.")
         self._valor = valor
 
-    @classmethod
+@classmethod
     def de_registro(cls, registro: str) -> Medicamento:
         campos = registro.split(";")
         if len(campos) != 5:
@@ -64,7 +64,7 @@ class Medicamento:
             valor=float(valor),
         )
 
-    @staticmethod
+  @staticmethod
      def dias_para_vencer(validade: date) -> int:
         return (validade - date.today()).days
 
