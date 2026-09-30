@@ -4,14 +4,15 @@ from datetime import date
 
 
 class QuantidadeInvalidaError(Exception):
-    """Indica uma quantidade inválida para movimentação do estoque."""
+    "Indica uma quantidade invalida para movimentacao do estoque"
 
 
 class MedicamentoVencidoError(Exception):
-    """Indica tentativa de dispensar um lote vencido."""
+    "Indica tentativa de dispensar um lote vecido"
 
 
 class Medicamento:
+
     def __init__(
         self,
         nome: str,
@@ -26,14 +27,14 @@ class Medicamento:
         self.quantidade = quantidade
         self.valor = valor
 
-    @property
+     @property
     def quantidade(self) -> int:
         return self._quantidade
 
     @quantidade.setter
     def quantidade(self, quantidade: int) -> None:
         if quantidade < 0:
-            raise ValueError("A quantidade em estoque não pode ser negativa.")
+            raise ValueError("A quantidade em estoque nao pode ser negativa")
         self._quantidade = quantidade
 
     @property
@@ -43,7 +44,7 @@ class Medicamento:
     @valor.setter
     def valor(self, valor: float) -> None:
         if not valor > 0:
-            raise ValueError("O valor unitário deve ser maior que zero.")
+            raise ValueError("O valor unitario deve ser maior que zero.")
         self._valor = valor
 
     @classmethod
@@ -51,7 +52,7 @@ class Medicamento:
         campos = registro.split(";")
         if len(campos) != 5:
             raise ValueError(
-                "O registro deve conter nome;lote;validade;quantidade;valor."
+                "O registro deve conter nome;lote;validade;quantidade;valor"
             )
 
         nome, lote, validade, quantidade, valor = campos
@@ -64,24 +65,24 @@ class Medicamento:
         )
 
     @staticmethod
-    def dias_para_vencer(validade: date) -> int:
+     def dias_para_vencer(validade: date) -> int:
         return (validade - date.today()).days
 
-    def dispensar(self, quantidade: int) -> None:
+     def dispensar(self, quantidade: int) -> None:
         if quantidade <= 0 or quantidade > self.quantidade:
             raise QuantidadeInvalidaError(
-                "A quantidade solicitada deve ser positiva e não pode exceder o estoque."
+                "A quantidade solicitada deve ser positiva e nao pode exceder o estoque"
             )
         if self.validade < date.today():
-            raise MedicamentoVencidoError("Não é possível dispensar um lote vencido.")
+            raise MedicamentoVencidoError("Nao e possivel dispensar um lote vencido.")
         self.quantidade -= quantidade
 
-    def repor(self, quantidade: int) -> None:
+     def repor(self, quantidade: int) -> None:
         if quantidade <= 0:
-            raise QuantidadeInvalidaError("A quantidade para reposição deve ser positiva.")
+            raise QuantidadeInvalidaError("A quantidade para reposicao deve ser positiva")
         self.quantidade += quantidade
 
-    def __str__(self) -> str:
+     def __str__(self) -> str:
         return (
             f"{self.nome} ({self.lote}) - {self.quantidade} un. - "
             f"val. {self.validade.strftime('%d/%m/%Y')}"
