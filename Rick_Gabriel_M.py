@@ -6,7 +6,7 @@ class QuantidadeInvalidaError(Exception):
  "Indica uma quantidade invalida para movimentacao do estoque"
 
 class MedicamentoVencidoError(Exception):
-  "Indica tentativa de dispensar um lote vecido"
+  "Indica tentativa de dispensa um lote vecido"
 
 class Medicamento:
 
@@ -68,7 +68,7 @@ class Medicamento:
      def dispensar(self, quantidade: int) -> None:
         if quantidade <= 0 or quantidade > self.quantidade:
             raise QuantidadeInvalidaError(
-                "A quantidade solicitada deve ser positiva e nao pode exceder o estoque"
+                "A quantidade solicitada deve ser positiva e nao pode passa do estoque"
             )
         if self.validade < date.today():
             raise MedicamentoVencidoError("Nao e possivel dispensar um lote vencido.")
